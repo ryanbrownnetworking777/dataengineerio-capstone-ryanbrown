@@ -2601,6 +2601,499 @@ Data will be a generated JSON blob with the following fields per the Amtrak.js d
 
 #### Japan Station Timetable
 
-Synthetic data based upon [TransportAPI](https://developer.transportapi.com/docs#get-/v3/uk/train/service_timetables/-service-.json). 
+Synthetic data based upon [Ekispert Web Service](https://docs.ekispert.com/v1/api/operationLine/timetable.html). 
 
-Data will be a generated json blob with the following fields per the transportapi documentation:
+Data will be a generated json blob with the following fields per the Exispert Web Service documentation:
+
+```
+{
+  "ResultSet": {
+    "apiVersion": "1.27.0.0",
+    "engineVersion": "201802_03a",
+    "TimeTable": {
+      "trainCount": "225",
+      "code": "1091",
+      "dateGroup": "weekday",
+      "Station": {
+        "Name": "高円寺"
+      },
+      "HourTable": [
+        {
+          "TimeReliability": "onTimeTable",
+          "MinuteTable": [
+            {
+              "Minute": "27",
+              "Stop": {
+                "kindCode": "1",
+                "platformNo": "3",
+                "lineCode": "29868",
+                "nameCode": "1",
+                "destinationCode": "1"
+              }
+            },
+            :
+          ],
+          "Hour": "6"
+        },
+        :
+      ],
+      "Line": {
+        "Name": "ＪＲ中央線快速",
+        "Direction": "高尾・青梅",
+        "Source": "東京・新宿",
+        "Color": "250060002"
+      },
+      "LineName": {
+        "text": "無し",
+        "code": "1"
+      },
+      "LineDestination": [
+        {
+          "text": "高尾(東京都)",
+          "code": "1"
+        },
+      :
+      ],
+      "LineKind": {
+        "text": "各駅停車",
+        "code": "1"
+      }
+    }
+  }
+}
+```
+
+
+#### Japan Train Timetable
+
+Synthetic data based upon [Ekispert Web Service](https://docs.ekispert.com/v1/api/operationLine/timetable.html). 
+
+Data will be a generated json blob with the following fields per the Exispert Web Service documentation:
+
+
+This API is actually a route search API but will be used to get the departure information for specific services from specific stations. 
+
+```
+{
+  "ResultSet":{
+    "apiVersion":"1.27.0.0",
+    "engineVersion":"201806_02a",
+    "Course":{
+      {
+        "searchType":"departure",
+        "dataType":"onTimetable",
+        "SerializeData":"VkV4QaECp6bKAsMCpgEz7noDpgEz7nkEkcIBQwAAAAKmATPueQPKAQECAQMBBAEHAQgBCgIMog9C_38Qpf_3BJLCAk6DiYOTg2iDfYFbg06WvAaSxgGlWI8CRJZrjPsDRJNrleAEpQOECgILAsMBpVjPA0STa5XgBKUC0KAFlsIBBAIBwQKlWM_BAqVynsECpVjVwQKlV_HBAqVYLQaTwwEDAg8DwQEBwwEBAgEDxQGmAAEMXgIDAwgHBQgEwwEDAgUDwQEBB5PFAaYBM|59A6UC8gSlAv4FAAgAxgGmATPufQIBA6UC_wSlAwgFAAgAxgGmATPufQICA6UDCgSlAwwFAAgACJPEAQQEAQUEBwHFAgEEAgUBB6UBSAgCxQICBAMFAgcBCUSTa5XgCZHDAQECAQMBCpHDAQECAQMBD5HFAZQAAQIDApPDAQACAAMAwwEBAgEDAcMBAgICAwIDk8MBAAIAAwDDAQECAQMBwwECAgIDAgSRAAWRAA**--T3221233232319:F332112212000:A23121141:--5d9f0218cb2ab55c22276479f5d23b7254e853d7--0--0--0--379",
+        "Price":{
+          {
+            "kind":"FareSummary",
+            "Oneway":"170",
+            "Round":"340"
+          },
+          {
+            "fareRevisionStatus":"none",
+            "toLineIndex":"2",
+            "fromLineIndex":"2",
+            "kind":"Fare",
+            "index":"1",
+            "selected":"true",
+            "Type":"Fare",
+            "Oneway":"170",
+            "RevisionStatus":"latest",
+            "Round":"340"
+          },
+          {
+            "kind":"Teiki1Summary",
+            "Oneway":"6810"
+          },
+          {
+            "fareRevisionStatus":"none",
+            "toLineIndex":"2",
+            "fromLineIndex":"2",
+            "kind":"Teiki1",
+            "index":"1",
+            "selected":"true",
+            "Type":"Teiki1",
+            "Oneway":"6810",
+            "RevisionStatus":"latest"
+          },
+          {
+            "kind":"Teiki3Summary",
+            "Oneway":"19410"
+          },
+          {
+            "fareRevisionStatus":"none",
+            "toLineIndex":"2",
+            "fromLineIndex":"2",
+            "kind":"Teiki3",
+            "index":"1",
+            "selected":"true",
+            "Type":"Teiki3",
+            "Oneway":"19410",
+            "RevisionStatus":"latest"
+          },
+          {
+            "kind":"Teiki6Summary",
+            "Oneway":"36780"
+          },
+          {
+            "fareRevisionStatus":"none",
+            "toLineIndex":"2",
+            "fromLineIndex":"2",
+            "kind":"Teiki6",
+            "index":"1",
+            "selected":"true",
+            "Type":"Teiki6",
+            "Oneway":"36780",
+            "RevisionStatus":"latest"
+          }
+        ],
+        "Route":{
+          "timeOther":"3",
+          "timeOnBoard":"9",
+          "exhaustCO2":"107",
+          "exhaustCO2atPassengerCar":"823",
+          "distance":"49",
+          "timeWalk":"14",
+          "transferCount":"0",
+          "Line":{
+            {
+              "stopStationCount":"0",
+              "timeOnBoard":"12",
+              "exhaustCO2":"0",
+              "exhaustCO2atPassengerCar":"0",
+              "distance":"0",
+              "Name":"徒歩",
+              "ArrivalState":{
+                "Type":"normal",
+                "Datetime":{
+                  "text":"2018-06-05T12:46:00+09:00",
+                  "operation":"today"
+                }
+              },
+              "TimeReliability":"average",
+              "DepartureState":{
+                "Type":"normal",
+                "Datetime":{
+                  "text":"2018-06-05T12:34:00+09:00",
+                  "operation":"today"
+                }
+              },
+              "Color":"000000000"
+            },
+            {
+              "stopStationCount":"4",
+              "teiki3Index":"1",
+              "teiki6Index":"1",
+              "timeOnBoard":"9",
+              "track":"railway",
+              "exhaustCO2":"107",
+              "fareIndex":"1",
+              "exhaustCO2atPassengerCar":"823",
+              "distance":"49",
+              "teiki1Index":"1",
+              "Name":"東京メトロ丸ノ内線・池袋行",
+              "Type":"train",
+              "ArrivalState":{
+                "no":"2",
+                "Type":"normal",
+                "Datetime":{
+                  "text":"2018-06-05T12:56:00+09:00",
+                  "operation":"today"
+                }
+              },
+              "Destination":"池袋",
+              "TimeReliability":"onTimetable",
+              "DepartureState":{
+                "no":"2",
+                "Type":"normal",
+                "Datetime":{
+                  "text":"2018-06-05T12:47:00+09:00",
+                  "operation":"today"
+                }
+              },
+              "LineSymbol":{
+                "code":"151",
+                "Name":"M"
+              },
+              "Color":"227017026"
+            },
+            {
+              "stopStationCount":"0",
+              "timeOnBoard":"2",
+              "exhaustCO2":"0",
+              "exhaustCO2atPassengerCar":"0",
+              "distance":"0",
+              "Name":"徒歩",
+              "Type":"walk",
+              "ArrivalState":{
+                "Type":"normal",
+                "Datetime":{
+                  "text":"2018-06-05T13:00:00+09:00",
+                  "operation":"today"
+                }
+              },
+              "TypicalName":"徒歩",
+              "TimeReliability":"average",
+              "DepartureState":{
+                "Type":"normal",
+                "Datetime":{
+                  "text":"2018-06-05T12:58:00+09:00",
+                  "operation":"today"
+                }
+              },
+              "Color":"230230230"
+            }
+          ],
+          "Point":{
+            {
+              "Name":"ランドマーク名"
+            },
+            {
+              "Station":{
+                "code":"22735",
+                "Name":"新高円寺",
+                "Type":"train",
+                "Yomi":"しんこうえんじ"
+              },
+              "Prefecture":{
+                "code":"13",
+                "Name":"東京都"
+              },
+              "GeoPoint":{
+                "longi":"139.39.5.39",
+                "lati":"35.41.40.29",
+                "longi_d":"139.6515",
+                "gcs":"tokyo",
+                "lati_d":"35.694527"
+              }
+            },
+            {
+              "Station":{
+                "code":"29342",
+                "Name":"新宿(東京メトロ)",
+                "Type":"train",
+                "Yomi":"しんじゅく"
+              },
+              "Prefecture":{
+                "code":"13",
+                "Name":"東京都"
+              },
+              "GeoPoint":{
+                "longi":"139.42.15.0",
+                "lati":"35.41.21.0",
+                "longi_d":"139.704167",
+                "gcs":"tokyo",
+                "lati_d":"35.689167"
+              }
+            },
+            {
+              "Station":{
+                "code":"22741",
+                "Name":"新宿",
+                "Type":"train",
+                "Yomi":"しんじゅく"
+              },
+              "Prefecture":{
+                "code":"13",
+                "Name":"東京都"
+              },
+              "GeoPoint":{
+                "longi":"139.42.11.0",
+                "lati":"35.41.15.0",
+                "longi_d":"139.703056",
+                "gcs":"tokyo",
+                "lati_d":"35.6875"
+              }
+            }
+          ]
+        }
+      },
+      {
+        :
+      }
+    ]
+  }
+}
+```
+
+### Netsuite Extract Table DDL
+
+(Thank you Chat GPT)
+
+#### Cash Sale
+
+This table is for cash sales at the Bakehouse Central locations
+
+```
+CREATE TABLE CashSale (
+     account_id INT PRIMARY KEY
+    ,altHandlingCost DECIMAL(10, 2)
+    ,altShippingCost DECIMAL(10, 2)
+    ,authCode VARCHAR(255)
+    ,billAddressList_id INT
+    ,billingAccount_id INT
+    ,billingAddress_id INT
+    ,billingSchedule_id INT
+    ,canHaveStackable BOOLEAN
+    ,ccApproved BOOLEAN
+    ,ccAvsStreetMatch VARCHAR(50)
+    ,ccAvsZipMatch VARCHAR(50)
+    ,ccExpireDate DATE
+    ,ccIsPurchaseCardBin BOOLEAN
+    ,ccName VARCHAR(255)
+    ,ccNumber VARCHAR(16)
+    ,ccProcessAsPurchaseCard BOOLEAN
+    ,ccSecurityCode VARCHAR(3)
+    ,ccSecurityCodeMatch VARCHAR(50)
+    ,ccStreet VARCHAR(255)
+    ,ccZipCode VARCHAR(10)
+    ,chargeIt BOOLEAN
+    ,checkNumber VARCHAR(255)
+    ,class_id INT
+    ,contribPct VARCHAR(255)
+    ,createdDate DATETIME
+    ,createdFrom_id INT
+    ,creditCard_id INT
+    ,creditCardProcessor_id INT
+    ,currency_id INT
+    ,currencyName VARCHAR(255)
+    ,customFieldList_id INT
+    ,customForm_id INT
+    ,debitCardIssueNo VARCHAR(255)
+    ,deferredRevenue DECIMAL(10, 2)
+    ,department_id INT
+    ,discountItem_id INT
+    ,discountRate VARCHAR(255)
+);
+
+```
+
+#### Bill of Materials
+
+The receipie for manufactured goods, in our case it's the actual receipies of the cookies!
+
+```
+CREATE TABLE BOM (
+     id INT PRIMARY KEY
+    ,availableForAllAssemblies BOOLEAN
+    ,availableForAllLocations BOOLEAN
+    ,createdDate DATETIME
+    ,customFieldList_id INT
+    ,customForm_id INT
+    ,includeChildren BOOLEAN
+    ,isInactive BOOLEAN
+    ,legacyBomForAssembly_id INT
+    ,memo TEXT
+    ,name VARCHAR(255)
+    ,restrictToAssembliesList_id INT
+    ,restrictToLocationsList_id INT
+    ,subsidiaryList_id INT
+    ,useComponentYield BOOLEAN
+    ,usedOnAssembly BOOLEAN
+    ,externalId VARCHAR(255)
+    ,internalId VARCHAR(255)
+);
+
+```
+
+
+#### Bill of Materials Revision
+
+```
+CREATE TABLE BOMRevision (
+     id INT PRIMARY KEY
+    ,billOfMaterials_id INT REFERENCES BOM(id)
+    ,componentList_id INT
+    ,createdDate DATETIME
+    ,customFieldList_id INT
+    ,customForm_id INT
+    ,effectiveEndDate DATETIME
+    ,effectiveStartDate DATETIME
+    ,isInactive BOOLEAN
+    ,memo TEXT
+    ,name VARCHAR(255)
+    ,externalId VARCHAR(255)
+    ,internalId VARCHAR(255)
+);
+
+```
+#### Manufacturing Costs
+
+```
+CREATE TABLE ManufacturingCost (
+     costrecordID INT PRIMARY KEY
+    ,itemId INT
+    ,name VARCHAR(255)
+    ,memo TEXT
+    ,isInactive BOOLEAN
+    ,customForm_id INT
+    ,subsidiary_id INT
+    ,externalId VARCHAR(255)
+    ,internalId VARCHAR(255)
+    ,costDetailList 
+            STRUCT(
+                 costCategory INT
+                ,fixedRate DOUBLE
+                ,runRate DOUBLE
+              )[]
+            
+);
+
+```
+
+#### Location 
+
+
+```
+CREATE TABLE Location (
+     locationId INT PRIMARY KEY
+    ,allowStorePickup BOOLEAN
+    ,autoAssignmentRegionSetting VARCHAR(255)
+    ,bufferStock BIGINT
+    ,dailyShippingCapacity BIGINT
+    ,excludeLocationRegionsList_id INT
+    ,geolocationMethod VARCHAR(255)
+    ,includeChildren BOOLEAN
+    ,includeInControlTower BOOLEAN
+    ,includeLocationRegionsList_id INT
+    ,isInactive BOOLEAN
+    ,latitude DOUBLE
+    ,locationType VARCHAR(255)
+    ,logo_id INT
+    ,longitude DOUBLE
+    ,mainAddress_id INT
+    ,makeInventoryAvailable BOOLEAN
+    ,makeInventoryAvailableStore BOOLEAN
+    ,name VARCHAR(255)
+    ,nextPickupCutOffTime DATETIME
+    ,parent_id INT
+    ,returnAddress_id INT
+    ,soPredConfidence DOUBLE
+    ,soPredictedDays BIGINT
+    ,storePickupBufferStock DOUBLE
+    ,subsidiaryList_id INT
+    ,timeZone VARCHAR(255)
+    ,totalShippingCapacity BIGINT
+);
+
+```
+
+
+#### InventoryAssignment
+
+```
+CREATE TABLE InventoryAssignment (
+    assignmentId INT AUTO_INCREMENT PRIMARY KEY
+    ,binNumber_id INT
+    ,expirationDate DATETIME
+    ,internalId VARCHAR(255)
+    ,inventoryStatus_id INT
+    ,issueInventoryNumber_id INT
+    ,quantity DOUBLE
+    ,quantityAvailable DOUBLE
+    ,receiptInventoryNumber VARCHAR(255)
+    ,toBinNumber_id INT
+    ,toInventoryStatus_id INT
+);
+
+```
