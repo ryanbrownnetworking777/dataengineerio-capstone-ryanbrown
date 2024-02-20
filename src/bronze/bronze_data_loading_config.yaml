@@ -1,0 +1,98 @@
+delta_lake_path: &delta_lake_path "output_data_lake" 
+db_path: &db_path ERPSourceMockup.db
+pre_execution_python_code: &pre_execution_python_code | 
+  print(results.head(1))
+  function_to_execute_arguments["df"] = results
+  print(function_to_execute_arguments.keys())
+etl_jobs: 
+  - 
+    - step_description: Reading LOCATION duckdb table
+      function_to_execute: read_from_local_duck_db
+      function_to_execute_arguments:
+        db_path: *db_path 
+        query: "SELECT * FROM LOCATION"
+    - step_description: Writing LOCATION to local delta
+      function_to_execute: write_to_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: LOCATION
+        layer: bronze
+      pre_execution_python_code: *pre_execution_python_code
+  - 
+    - step_description: Reading ACCOUNTS duckdb table
+      function_to_execute: read_from_local_duck_db
+      function_to_execute_arguments:
+        db_path: *db_path 
+        query: "SELECT * FROM ACCOUNTS"
+    - step_description: Writing ACCOUNTS to local delta
+      function_to_execute: write_to_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: ACCOUNTS
+        layer: bronze
+      pre_execution_python_code: *pre_execution_python_code
+  - 
+    - step_description: Reading INVENTORYITEMLOCATIONS duckdb table
+      function_to_execute: read_from_local_duck_db
+      function_to_execute_arguments:
+        db_path: *db_path 
+        query: "SELECT * FROM INVENTORYITEMLOCATIONS"
+    - step_description: Writing INVENTORYITEMLOCATIONS to local delta
+      function_to_execute: write_to_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: INVENTORYITEMLOCATIONS
+        layer: bronze
+      pre_execution_python_code: *pre_execution_python_code
+  - 
+    - step_description: Reading INVENTORYITEMS duckdb table
+      function_to_execute: read_from_local_duck_db
+      function_to_execute_arguments:
+        db_path: *db_path 
+        query: "SELECT * FROM INVENTORYITEMS"
+    - step_description: Writing INVENTORYITEMS to local delta
+      function_to_execute: write_to_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: INVENTORYITEMS
+        layer: bronze
+      pre_execution_python_code: *pre_execution_python_code
+  - 
+    - step_description: Reading PURCHASEORDER duckdb table
+      function_to_execute: read_from_local_duck_db
+      function_to_execute_arguments:
+        db_path: *db_path 
+        query: "SELECT * FROM PURCHASEORDER"
+    - step_description: Writing PURCHASEORDER to local delta
+      function_to_execute: write_to_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: PURCHASEORDER
+        layer: bronze
+      pre_execution_python_code: *pre_execution_python_code
+  - 
+    - step_description: Reading WORKORDER duckdb table
+      function_to_execute: read_from_local_duck_db
+      function_to_execute_arguments:
+        db_path: *db_path 
+        query: "SELECT * FROM WORKORDER"
+    - step_description: Writing WORKORDER to local delta
+      function_to_execute: write_to_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: WORKORDER
+        layer: bronze
+      pre_execution_python_code: *pre_execution_python_code
+  - 
+    - step_description: Reading SALESORDER duckdb table
+      function_to_execute: read_from_local_duck_db
+      function_to_execute_arguments:
+        db_path: *db_path 
+        query: "SELECT * FROM SALESORDER"
+    - step_description: Writing SALESORDER to local delta
+      function_to_execute: write_to_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: SALESORDER
+        layer: bronze
+      pre_execution_python_code: *pre_execution_python_code

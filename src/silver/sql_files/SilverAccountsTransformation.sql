@@ -1,0 +1,15 @@
+SELECT
+   accountId as 'Account ID'
+  ,acctName as 'Account Name'
+  ,acctNumber as 'Account Number'
+  ,acctType as 'Account Type'
+  ,currency_id as 'Currency ID'
+  ,department_id as 'Department ID'
+  ,description as 'Description'
+  ,eliminate as 'Eliminate?'
+  ,exchangeRate as 'Exchange Rate'
+  ,inventory as 'Inventory?'
+  ,isInactive as 'Inactive?'
+  ,legalName as 'Legal Name'
+  ,location_id as 'Location ID'
+FROM results

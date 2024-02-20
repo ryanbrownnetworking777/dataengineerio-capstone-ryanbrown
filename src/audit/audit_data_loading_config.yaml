@@ -1,0 +1,256 @@
+# Common anchors here
+delta_lake_path: &delta_lake_path "output_data_lake" 
+# Multiline anchor of executable python code run before a called out function executes. Can be overridden in the actual definition. 
+pre_execution_python_code: &pre_execution_python_code | 
+  print(results.head(1))
+  function_to_execute_arguments["df"] = results
+  print(function_to_execute_arguments.keys())
+# Array of etl jobs that will be run, each job has an arbitrary number of steps. Valid and invalid examples included. 
+etl_jobs: 
+  - 
+    - step_description: Reading StagedLocation Silver Delta Table 
+      function_to_execute: read_from_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: StagedLocation
+        layer: silver
+    - step_description: Writing DimLocation to Audit local delta
+      function_to_execute: write_to_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: DimLocation
+        layer: audit
+      pre_execution_python_code: *pre_execution_python_code
+    - step_description: Reading DimLocation Audit Delta Table 
+      function_to_execute: read_from_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: DimLocation
+        layer: audit
+    - step_description: Auditing DimLocation for null counts
+      function_to_execute: check_missing_values
+      function_to_execute_arguments:
+        table_name: DimLocation
+      pre_execution_python_code: *pre_execution_python_code
+    - step_description: Idempotently writing null count result to null count audit log
+      function_to_execute: idempotent_append_to_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: NullCountAuditLog
+        layer: audit
+      pre_execution_python_code: *pre_execution_python_code
+    - step_description: Reading DimLocation Audit Delta Table 
+      function_to_execute: read_from_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: DimLocation
+        layer: audit
+    - step_description: Auditing DimLocation for invalid data
+      function_to_execute: batch_audit_column_constraints
+      function_to_execute_arguments:
+        table_name: DimLocation
+        df_name: results
+        columns_and_predicates_list:
+          - column: '"Buffer Stock Setting"'
+            sql_constraint_predicate: '<CAST(50.00 AS DOUBLE)'
+          - column: '"Time Zone"'
+            sql_constraint_predicate: " LIKE 'Africa%'"
+    - step_description: Idempotently writing invalid data count result to invalid data audit log
+      function_to_execute: idempotent_append_to_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: InvalidDataAuditLog
+        layer: audit
+      pre_execution_python_code: *pre_execution_python_code
+  - 
+    - step_description: Reading Accounts Silver Delta Table 
+      function_to_execute: read_from_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: StagedAccounts
+        layer: silver
+    - step_description: Writing DimAccounts to Audit local delta
+      function_to_execute: write_to_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: DimAccounts
+        layer: audit
+      pre_execution_python_code: *pre_execution_python_code
+    - step_description: Reading DimAccounts Audit Delta Table 
+      function_to_execute: read_from_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: DimAccounts
+        layer: audit
+    - step_description: Auditing DimAccounts for null counts
+      function_to_execute: check_missing_values
+      function_to_execute_arguments:
+        table_name: DimAccounts
+      pre_execution_python_code: *pre_execution_python_code
+    - step_description: Idempotently writing null count result to null count audit log
+      function_to_execute: idempotent_append_to_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: NullCountAuditLog
+        layer: audit
+      pre_execution_python_code: *pre_execution_python_code
+  - 
+    - step_description: Reading StagedInventoryItemLocations silver Delta Table 
+      function_to_execute: read_from_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: StagedInventoryItemLocations
+        layer: silver
+    - step_description: Writing DimInventoryItemLocations to Audit local delta
+      function_to_execute: write_to_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: DimInventoryItemLocations
+        layer: audit
+      pre_execution_python_code: *pre_execution_python_code
+    - step_description: Reading DimInventoryItemLocations Audit Delta Table 
+      function_to_execute: read_from_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: DimInventoryItemLocations
+        layer: audit
+    - step_description: Auditing DimInventoryItemLocations for null counts
+      function_to_execute: check_missing_values
+      function_to_execute_arguments:
+        table_name: DimInventoryItemLocations
+      pre_execution_python_code: *pre_execution_python_code
+    - step_description: Idempotently writing null count result to null count audit log
+      function_to_execute: idempotent_append_to_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: NullCountAuditLog
+        layer: audit
+      pre_execution_python_code: *pre_execution_python_code
+  - 
+    - step_description: Reading StagedInventoryItems silver Delta Table 
+      function_to_execute: read_from_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: StagedInventoryItems
+        layer: silver
+    - step_description: Writing DimInventoryItems to Audit local delta
+      function_to_execute: write_to_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: DimInventoryItems
+        layer: audit
+      pre_execution_python_code: *pre_execution_python_code
+    - step_description: Reading DimInventoryItems Audit Delta Table 
+      function_to_execute: read_from_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: DimInventoryItems
+        layer: audit
+    - step_description: Auditing DimInventoryItems for null counts
+      function_to_execute: check_missing_values
+      function_to_execute_arguments:
+        table_name: DimInventoryItems
+      pre_execution_python_code: *pre_execution_python_code
+    - step_description: Idempotently writing null count result to null count audit log
+      function_to_execute: idempotent_append_to_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: NullCountAuditLog
+        layer: audit
+      pre_execution_python_code: *pre_execution_python_code
+  - 
+    - step_description: Reading StagedPurchaseOrder silver Delta Table 
+      function_to_execute: read_from_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: StagedPurchaseOrder
+        layer: silver
+    - step_description: Writing FactPurchaseOrder to Audit local delta
+      function_to_execute: write_to_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: FactPurchaseOrder
+        layer: audit
+      pre_execution_python_code: *pre_execution_python_code
+    - step_description: Reading FactPurchaseOrder Audit Delta Table 
+      function_to_execute: read_from_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: FactPurchaseOrder
+        layer: audit
+    - step_description: Auditing FactPurchaseOrder for null counts
+      function_to_execute: check_missing_values
+      function_to_execute_arguments:
+        table_name: FactPurchaseOrder
+      pre_execution_python_code: *pre_execution_python_code
+    - step_description: Idempotently writing null count result to null count audit log
+      function_to_execute: idempotent_append_to_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: NullCountAuditLog
+        layer: audit
+      pre_execution_python_code: *pre_execution_python_code
+  - 
+    - step_description: Reading StagedSalesOrder silver Delta Table 
+      function_to_execute: read_from_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: StagedSalesOrder
+        layer: silver
+    - step_description: Writing FactSalesOrder to Audit local delta
+      function_to_execute: write_to_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: FactSalesOrder
+        layer: audit
+      pre_execution_python_code: *pre_execution_python_code
+    - step_description: Reading FactSalesOrder Audit Delta Table 
+      function_to_execute: read_from_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: FactSalesOrder
+        layer: audit
+    - step_description: Auditing FactSalesOrder for null counts
+      function_to_execute: check_missing_values
+      function_to_execute_arguments:
+        table_name: FactSalesOrder
+      pre_execution_python_code: *pre_execution_python_code
+    - step_description: Idempotently writing null count result to null count audit log
+      function_to_execute: idempotent_append_to_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: NullCountAuditLog
+        layer: audit
+      pre_execution_python_code: *pre_execution_python_code
+  - 
+    - step_description: Reading StagedWorkOrder silver Delta Table 
+      function_to_execute: read_from_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: StagedWorkOrder
+        layer: silver
+    - step_description: Writing FactWorkOrder to Audit local delta
+      function_to_execute: write_to_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: FactWorkOrder
+        layer: audit
+      pre_execution_python_code: *pre_execution_python_code
+    - step_description: Reading FactWorkOrder Audit Delta Table 
+      function_to_execute: read_from_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: FactWorkOrder
+        layer: audit
+    - step_description: Auditing FactWorkOrder for null counts
+      function_to_execute: check_missing_values
+      function_to_execute_arguments:
+        table_name: FactWorkOrder
+      pre_execution_python_code: *pre_execution_python_code
+    - step_description: Idempotently writing null count result to null count audit log
+      function_to_execute: idempotent_append_to_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: NullCountAuditLog
+        layer: audit
+      pre_execution_python_code: *pre_execution_python_code

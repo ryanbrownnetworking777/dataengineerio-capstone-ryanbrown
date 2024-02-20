@@ -1,0 +1,29 @@
+# Common anchors here
+delta_lake_path: &delta_lake_path "output_data_lake" 
+db_path: &db_path ERPSourceMockup.db
+# Multiline anchor of executable python code run before a called out function executes. Can be overridden in the actual definition. 
+pre_execution_python_code: &pre_execution_python_code | 
+  print(results.head(1))
+  function_to_execute_arguments["df"] = results
+  print(function_to_execute_arguments.keys())
+# Array of etl jobs that will be run, each job has an arbitrary number of steps. Valid and invalid examples included. 
+etl_jobs: 
+  - 
+    - step_description: Reading MYTABLE duckdb table
+      function_to_execute: read_from_local_duck_db
+      function_to_execute_arguments:
+        db_path: *db_path 
+        query: "SELECT * FROM MYTABLE"
+    - step_description: Writing MYTABLE to local delta
+      function_to_execute: write_to_local_delta
+      function_to_execute_arguments:
+        delta_lake_path: *delta_lake_path 
+        table_name: MYTABLE
+        layer: bronze
+      pre_execution_python_code: *pre_execution_python_code
+  -
+    - step_description: Your mom is an invalid job example, but does deserve cookies 😜.
+      function_to_execute: your mom
+      function_to_execute_arguments:
+        is_awesome: True
+        deserves_cookies: True

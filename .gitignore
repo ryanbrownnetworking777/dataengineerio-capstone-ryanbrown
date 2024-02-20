@@ -1,3 +1,6 @@
+/venv
+/**/*.ipynb
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -151,7 +154,14 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
-
+/**/*.db
+/output_data_lake
+/test_delta_lake
+/smbdrive
+/api_responses
+/fn_ReadDeltaTable.pq
+/function_checklist
+/ERPSourceMockup*
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
